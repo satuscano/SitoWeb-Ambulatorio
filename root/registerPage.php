@@ -8,10 +8,10 @@ require '../src/Exception.php';
 ?>
 
 <html>
-<head>
-    <title>Registrazione</title>
-    <?php include ('../inc/header.inc'); ?>
-</head>
+    <head>
+        <title>Registrazione</title>
+        <?php include ('../inc/header.inc'); ?>
+    </head>
 <body>
 
 <?php include ('../inc/start.inc'); ?>
@@ -79,6 +79,7 @@ require '../src/Exception.php';
             <br><br>
 
             <?php
+            $success = false;
             if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                 $nome = $_POST["nome"];
@@ -95,139 +96,145 @@ require '../src/Exception.php';
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
                     echo '<div class="alert alert-danger mt-3">Email non valida</div>';
                     exit;
-                }
+                } else {
+                    $password = bin2hex(random_bytes(4)); // generazione password
+                    $username = $cf;
 
-                // genera credenziali
-                $password = bin2hex(random_bytes(4));
-                $username = $cf;
+                    $mail = new PHPMailer(true);
 
-                $mail = new PHPMailer(true);
+                    try {
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->SMTPAuth = true;
 
-                try {
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
+                        $mail->Username = 'alessio.tuscano07@gmail.com';
+                        $mail->Password = 'oouxruxyblpdvtce';
 
-                    $mail->Username = 'alessio.tuscano07@gmail.com';
-                    $mail->Password = 'oouxruxyblpdvtce';
+                        $mail->SMTPSecure = 'tls';
+                        $mail->Port = 587;
+                        $mail->CharSet = 'UTF-8';
 
-                    $mail->SMTPSecure = 'tls';
-                    $mail->Port = 587;
-                    $mail->CharSet = 'UTF-8';
+                        $mail->setFrom('alessio.tuscano07@gmail.com', 'Sistema di Registrazione');
+                        $mail->addAddress($email);
 
-                    $mail->setFrom('alessio.tuscano07@gmail.com', 'Sistema di Registrazione');
-                    $mail->addAddress($email);
+                        $mail->Subject = 'Le tue credenziali di accesso';
 
-                    $mail->Subject = 'Le tue credenziali di accesso';
+                        $mail->isHTML(true);
 
-                    $mail->isHTML(true);
+                        $mail->Body = "
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    background-color: #f4f6f9;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                .container {
+                                    max-width: 600px;
+                                    margin: 30px auto;
+                                    background: #ffffff;
+                                    border-radius: 10px;
+                                    overflow: hidden;
+                                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                                }
+                                .header {
+                                    background: #0d6efd;
+                                    color: white;
+                                    padding: 20px;
+                                    text-align: center;
+                                }
+                                .content {
+                                    padding: 25px;
+                                    color: #333;
+                                }
+                                .box {
+                                    background: #f1f3f5;
+                                    padding: 15px;
+                                    border-radius: 8px;
+                                    margin-top: 10px;
+                                }
+                                .footer {
+                                    text-align: center;
+                                    font-size: 12px;
+                                    color: #888;
+                                    padding: 15px;
+                                }
+                                .title {
+                                    margin: 0;
+                                }
+                            </style>
+                        </head>
 
-                    $mail->Body = "
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <style>
-                            body {
-                                font-family: Arial, sans-serif;
-                                background-color: #f4f6f9;
-                                margin: 0;
-                                padding: 0;
-                            }
-                            .container {
-                                max-width: 600px;
-                                margin: 30px auto;
-                                background: #ffffff;
-                                border-radius: 10px;
-                                overflow: hidden;
-                                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                            }
-                            .header {
-                                background: #0d6efd;
-                                color: white;
-                                padding: 20px;
-                                text-align: center;
-                            }
-                            .content {
-                                padding: 25px;
-                                color: #333;
-                            }
-                            .box {
-                                background: #f1f3f5;
-                                padding: 15px;
-                                border-radius: 8px;
-                                margin-top: 10px;
-                            }
-                            .footer {
-                                text-align: center;
-                                font-size: 12px;
-                                color: #888;
-                                padding: 15px;
-                            }
-                            .title {
-                                margin: 0;
-                            }
-                        </style>
-                    </head>
+                        <body>
 
-                    <body>
+                        <div class='container'>
 
-                    <div class='container'>
-
-                        <div class='header'>
-                            <h2 class='title'>Sistema di Registrazione</h2>
-                        </div>
-
-                        <div class='content'>
-                            <h3>Ciao, $nome $cognome</h3>
-                            <p>La tua registrazione è stata completata con successo.</p>
-
-                            <div class='box'>
-                                <p><strong>Username:</strong> $username</p>
-                                <p><strong>Password:</strong> $password</p>
+                            <div class='header'>
+                                <h2 class='title'>Sistema di Registrazione</h2>
                             </div>
 
-                            <p style='margin-top:15px;'>
-                                Conserva queste credenziali in un luogo sicuro.
-                            </p>
+                            <div class='content'>
+                                <h3>Ciao, $nome $cognome</h3>
+                                <p>La tua registrazione è stata completata con successo.</p>
 
-                            <p style='margin-top:15px;, align:center;'>
-                                <a href='http://localhost/AMBULATORIO/root/loginPage.php' style='color: #0d6efd; text-decoration: none;'>Accedi alla dashboard</a>
-                            </p>
+                                <div class='box'>
+                                    <p><strong>Username:</strong> $username</p>
+                                    <p><strong>Password:</strong> $password</p>
+                                </div>
+
+                                <p style='margin-top:15px;'>
+                                    Conserva queste credenziali in un luogo sicuro.
+                                </p>
+
+                                <p style='margin-top:15px;, align:center;'>
+                                    <a href='http://localhost/AMBULATORIO/root/loginPage.php' style='color: #0d6efd; text-decoration: none;'>Accedi alla dashboard</a>
+                                </p>
+                            </div>
+
+                            <div class='footer'>
+                                Email generata automaticamente - non rispondere
+                            </div>
+
                         </div>
 
-                        <div class='footer'>
-                            Email generata automaticamente - non rispondere
-                        </div>
-
-                    </div>
-
-                    </body>
-                    </html>
-                    ";
+                        </body>
+                        </html>
+                        ";
 
 
-                    // verificare se codice fiscale già esiste
-                    $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE codiceFiscale = ?");
-                    $stmt->execute([$cf]);
-                    if($stmt->fetchColumn() > 0){
-                        echo '<div class="alert alert-danger mt-3">Codice fiscale già registrato</div>';
+                        // verificare se codice fiscale già esiste
+                        $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE codiceFiscale = ?");
+                        $stmt->execute([$cf]);
+                        if($stmt->fetchColumn() > 0){
+                            echo '<div class="alert alert-danger mt-3">Codice fiscale già registrato</div>';
+                            exit;
+                        }
+
+                        // altrimenti, salva utente e paziente
+                        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                        $stmt = $conn->prepare("INSERT INTO users (codiceFiscale, email, ruolo, password) VALUES (?, ?, ?, ?)");
+                        $stmt->execute([$cf, $email, 'paziente', $hashedPassword]);
+
+                        $stmt = $conn->prepare("INSERT INTO paziente (codiceFiscale, nome, cognome, dataNascita, anamnesi, ind_via, ind_civico, ind_cap, ind_citta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->execute([$cf, $nome, $cognome, $dataNascita, '', $via, $civico, $cap, $citta]);
+                        
+                        if($mail->send()){
+                            $success = true;
+                        }
+
+                        if($success)
+                            header("Location: registerConfirm.php");
+                        else
+                            header("Location: registerFailed.php");
                         exit;
+
+                    } catch (Exception $e) {
+                        echo '<div class="alert alert-danger mt-3">Errore invio mail: ' . $mail->ErrorInfo . '</div>';
                     }
-
-                    // altrimenti, salva utente e paziente
-                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-                    $stmt = $conn->prepare("INSERT INTO users (codiceFiscale, email, ruolo, password) VALUES (?, ?, ?, ?)");
-                    $stmt->execute([$cf, $email, 'paziente', $hashedPassword]);
-
-                    $stmt = $conn->prepare("INSERT INTO paziente (codiceFiscale, nome, cognome, dataNascita, anamnesi, ind_via, ind_civico, ind_cap, ind_citta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $stmt->execute([$cf, $nome, $cognome, $dataNascita, '', $via, $civico, $cap, $citta]);
-                    
-                    $mail->send();
-                    echo '<div class="alert alert-success mt-3">Registrazione completata! Controlla la tua email</div>';
-
-                } catch (Exception $e) {
-                    echo '<div class="alert alert-danger mt-3">Errore invio mail: ' . $mail->ErrorInfo . '</div>';
                 }
             }
             ?>

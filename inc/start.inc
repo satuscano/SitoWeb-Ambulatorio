@@ -1,6 +1,6 @@
 <?php
 $servername = "localhost";
-$dbname = "databaseprogetto";
+$dbname = "databaseprogetto1";
 $username = "root";
 $password = "";
 // creo un nuovo oggetto PDO (connessione)
