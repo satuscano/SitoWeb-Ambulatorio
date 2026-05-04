@@ -1,1 +1,3 @@
+- fare navbar
+- fare disegno dashboard
 - fare dashboard.php
