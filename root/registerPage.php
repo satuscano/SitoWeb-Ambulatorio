@@ -208,7 +208,11 @@ require '../src/Exception.php';
                         // verificare se codice fiscale già esiste
                         $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE codiceFiscale = ?");
                         $stmt->execute([$cf]);
-                        if($stmt->fetchColumn() > 0){
+                        $n = 0;
+                        $n = $stmt->fetchColumn();
+                        
+                        if($n > 0){
+                            header("Location: registerFailed.php");
                             echo '<div class="alert alert-danger mt-3">Codice fiscale già registrato</div>';
                             exit;
                         }

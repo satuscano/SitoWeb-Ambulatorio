@@ -1,3 +1,3 @@
-- fare navbar
-- fare disegno dashboard
-- fare dashboard.php
+- sistemare foto profilo
+- fare side bar dashboard
+- fare prenota esamre con stesso stile di dashboard

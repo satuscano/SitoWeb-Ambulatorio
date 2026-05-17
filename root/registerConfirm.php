@@ -5,7 +5,7 @@
     </head>
     <body>
         <?php include ('../inc/start.inc'); ?>
-        <?php include ('../inc/navbar.inc'); ?>
+        
         <?php echo '<div class="alert alert-success mt-3">Registrazione completata! Controlla la tua email</div>'; ?>
         <br><br>
         
