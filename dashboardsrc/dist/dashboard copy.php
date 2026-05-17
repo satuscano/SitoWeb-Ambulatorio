@@ -50,7 +50,7 @@ $pagamenti = $stmtPag->fetchAll(PDO::FETCH_ASSOC);
 
 <html lang="it">
   <head>
-    include("../../inc/header.inc");
+    <?php include ("../../inc/header.inc"); ?>
     <meta charset="utf-8">
     <title>Dashboard Paziente</title>
 
@@ -61,20 +61,31 @@ $pagamenti = $stmtPag->fetchAll(PDO::FETCH_ASSOC);
   <body>
     <div class="container-scroller">
 
-    <!-- NAVBAR -->
-    <nav class="navbar default-layout-navbar fixed-top d-flex flex-row">
-      <div class="navbar-brand-wrapper">
-        <span class="text-black ms-3">Sanità Dashboard</span>
-      </div>
-    </nav>
-
     <div class="container-fluid page-body-wrapper">
 
     <!-- SIDEBAR -->
+      <style>
+        .userPicture {
+          width: 20px;
+          height: 20px;
+          border-radius: 10%;
+          object-fit: cover;
+        }
+      </style>
+
     <nav class="sidebar">
       <ul class="nav">
         <li class="nav-item">
-          <span class="nav-link">👤 <?= $paziente['nome'] . " " . $paziente['cognome'] ?></span>
+          <a href="dashboard.php">
+            
+            <img class="userPicture" src="../../img/user.png" alt="Avatar">
+            <span class="nav-link" style="font-weight: bold;"><?= $paziente['nome'] . " " . $paziente['cognome'] ?></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="prenotaEsame.php">
+            <span class="nav-link">Prenota un nuovo esame</span>
+          </a>
         </li>
       </ul>
     </nav>
@@ -143,6 +154,7 @@ $pagamenti = $stmtPag->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- PAGAMENTI -->
+    <br>
     <div class="row">
     <div class="col-12">
     <div class="card">

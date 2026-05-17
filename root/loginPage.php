@@ -40,7 +40,7 @@
                 if ($user && password_verify($password, $user['password'])) {
                     $_SESSION['codiceFiscale'] = $user['codiceFiscale'];
                     $_SESSION['ruolo'] = $user['ruolo'];
-                    header("Location: ../dashboardsrc/dist/dashboard.php");
+                    header("Location: dashboard.php");
                     exit;
                 } else
                     $error = 'Credenziali non valide. Riprova.';
