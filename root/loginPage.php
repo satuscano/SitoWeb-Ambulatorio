@@ -40,7 +40,13 @@
                 if ($user && password_verify($password, $user['password'])) {
                     $_SESSION['codiceFiscale'] = $user['codiceFiscale'];
                     $_SESSION['ruolo'] = $user['ruolo'];
-                    header("Location: dashboard.php");
+                    if($user['ruolo'] === 'paziente') {
+                        header("Location: dashboard.php");
+                    } elseif ($user['ruolo'] === 'medico') {
+                        header("Location: dashboardMedico.php");
+                    } else if ($user['ruolo'] === 'admin') {
+                        header("Location: dashboardAdmin.php");
+                    }
                     exit;
                 } else
                     $error = 'Credenziali non valide. Riprova.';

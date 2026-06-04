@@ -1,6 +1,6 @@
 <?php
-include("../../inc/auth.inc");
-include("../../inc/start.inc");
+include("../inc/auth.inc");
+include("../inc/start.inc");
 
 header('Content-Type: application/json');
 
@@ -54,3 +54,4 @@ for ($ora = (int)$orario['oraInizio']; $ora < (int)$orario['oraFine']; $ora++) {
 }
 
 echo json_encode(['disponibili' => $disponibili, 'occupati' => $occupati]);
+?>

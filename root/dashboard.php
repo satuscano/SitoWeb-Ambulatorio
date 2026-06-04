@@ -1,5 +1,9 @@
 <?php
 include("../inc/auth.inc");
+if ($_SESSION['ruolo'] !== 'paziente') {
+    header("Location: /AMBULATORIO/root/loginPage.php");
+    exit;
+}
 $cf = $_SESSION['codiceFiscale'];
 include("../inc/start.inc");
 
@@ -910,6 +914,8 @@ $pagamenti = $stmtPag->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+
+                <!-- funzione per ricevere medici e orari (da JSON) -->
 <script>
 function openModal(id) {
     document.getElementById('deleteId').value = id;
@@ -922,6 +928,7 @@ document.getElementById('deleteModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
 });
 
+// costruzione grafici
 <?php if (array_sum($conteggi) > 0): ?>
 new Chart(document.getElementById('grafico'), {
     type: 'bar',

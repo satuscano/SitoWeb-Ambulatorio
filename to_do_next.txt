@@ -1,3 +1,5 @@
-- sistemare foto profilo
-- fare side bar dashboard
-- fare prenota esamre con stesso stile di dashboard
+- fare storico esame
+- fare pagamenti
+
+- fare parte medico
+- fare parte admin

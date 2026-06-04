@@ -1,11 +1,11 @@
 <?php
-include("../../inc/auth.inc");
+include("../inc/auth.inc");
 if ($_SESSION['ruolo'] !== 'medico') {
     header("Location: /AMBULATORIO/root/loginPage.php");
     exit;
 }
 $cfMedico = $_SESSION['codiceFiscale'];
-include("../../inc/start.inc");
+include("../inc/start.inc");
 
 // Dati medico
 $stmtMed = $conn->prepare("
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['azione'])) {
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <?php include("../../inc/header.inc"); ?>
+    <?php include("../inc/header.inc"); ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard Medico</title>

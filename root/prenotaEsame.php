@@ -320,7 +320,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['azione']) && $_POST['
         <a href="appuntamenti.php"><i class="fas fa-calendar-alt"></i> Appuntamenti</a>
         <a href="storico.php"><i class="fas fa-file-medical"></i> Storico Esami</a>
         <div class="nav-section-title">Account</div>
-        <a href="profilo.php"><i class="fas fa-user-edit"></i> Modifica Profilo</a>
+        <a href="modificaProfilo.php"><i class="fas fa-user-edit"></i> Modifica Profilo</a>
         <a href="pagamenti.php"><i class="fas fa-credit-card"></i> Pagamenti</a>
     </nav>
     <div class="sidebar-footer">
@@ -351,7 +351,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['azione']) && $_POST['
                 <input type="hidden" name="codiceMedico" id="codiceMedicoHidden">
                 <input type="hidden" name="oraInizio" id="oraInizioHidden">
 
-                <!-- STEP 1: REPARTO -->
+                <!-- scelta reparto -->
                 <div class="form-group">
                     <label class="form-label">1. Scegli il Reparto</label>
                     <select class="form-control" name="codiceReparto" id="repartoSelect" onchange="loadMedici()">
@@ -364,13 +364,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['azione']) && $_POST['
                     </select>
                 </div>
 
-                <!-- STEP 2: MEDICO -->
+                <!-- scelta medico -->
                 <div class="form-group" id="medicoSection">
                     <label class="form-label">2. Scegli il Medico</label>
                     <div id="medicoList"></div>
                 </div>
 
-                <!-- STEP 3: DATA -->
+                <!-- scelta data -->
                 <div class="form-group" id="dataSection" style="display:none;">
                     <label class="form-label">3. Scegli la Data</label>
                     <input type="date" class="form-control" name="data" id="dataInput"
@@ -379,7 +379,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['azione']) && $_POST['
                            onchange="loadOrari()">
                 </div>
 
-                <!-- STEP 4: ORARIO -->
+                <!-- orari disponibili -->
                 <div class="form-group" id="orariSection">
                     <label class="form-label">4. Scegli l'Orario</label>
                     <div class="orari-grid" id="orariGrid"></div>
